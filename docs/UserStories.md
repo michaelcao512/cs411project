@@ -9,7 +9,7 @@ User Stories
 3. “As a user, I want to be directed straight to streaming services.”
 	Description: The user will select a movie recommendation and be taken directly to a known streaming service that it is on. If there are no streaming options for a movie, the user will be directed to a Google 	search for the movie to allow the user to find a way to watch it. 
 	
-“4. As a user, I want to be able to compile a watch list based on my suggestions.”
+4. "As a user, I want to be able to compile a watch list based on my suggestions.”
 	Description: The user will be able to select a button next to each movie they are recommended to add it to a list of movies they want to watch. The user will be able to view this list when trying to decide a movie to watch. 
 	
 5. “As a user, I want to be able to filter for certain criteria in the movies that are recommended.”
