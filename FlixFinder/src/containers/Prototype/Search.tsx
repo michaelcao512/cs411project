@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './Search.css';
-import { monitorEventLoopDelay } from 'perf_hooks';
 
 type Movie = {
     imdbID: string;
@@ -11,15 +10,15 @@ type Movie = {
 };
 
 const Search: React.FC = () => {
-    const [query, setQuery] = useState("");
+    const [searchTerm, setSearchTerm] = useState("");
     const [searchResults, setSearchResults] = useState<Movie[]>([]);
 
     const handleSearch = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         try {
-            const response = await axios.get(
-                `http://www.omdbapi.com/?s=${query}&apikey=INSERTAPIKEYHERE`
-            );
+            const url = "/api/movies";
+            const query = url.replace("movies", searchTerm)
+            const response = await axios.get(query);
             setSearchResults(response.data.Search);
         } catch (error) {
             console.error(error);
@@ -32,8 +31,8 @@ const Search: React.FC = () => {
                 <input
                     type="text"
                     placeholder="Search for a movie"
-                    value={query}
-                    onChange={(event) => setQuery(event.target.value)}
+                    value={searchTerm}
+                    onChange={(event) => setSearchTerm(event.target.value)}
                 />
                 <button className="btn btn-blue" type="submit">Search</button>
             </form>
