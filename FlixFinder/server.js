@@ -1,10 +1,38 @@
 const express = require('express');
 const request = require('request');
 const dotenv = require('dotenv').config();
-const port = process.env.PORT || 5001;
+const IBMwatson = require('ibm-watson/natural-language-understanding/v1');
+const { IamAuthenticator } = require('ibm-watson/auth');
+
 
 const app = express();
 app.use(express.json());
+
+const nlu = new IBMwatson({
+    version: '2022-04-07',
+    authenticator: new IamAuthenticator({
+      apikey: 'S3Q0C2vu_1InDR3eRzptRo4pH5Xr_7C_egqdKLppdzDK',
+    }),
+    serviceUrl: 'https://api.us-east.natural-language-understanding.watson.cloud.ibm.com/instances/83b8475b-34b2-496e-8571-1fa84d27ae69',
+});
+
+const analyzeParams = {
+    'url': "www.ibm.com",
+    'features': {
+        'concepts': {
+            'limit': 3
+        }
+    }
+};
+
+nlu.analyze(analyzeParams)
+    .then(analysisResults => {
+        console.log(JSON.stringify(analysisResults, null, 2));
+    })
+    .catch(err => {
+        console.log('error:', err);
+    });
+  
 
 app.get('/api/:movies', async (req, res) => {
     const searchTerm = req.params.movies;
@@ -30,7 +58,7 @@ app.use('/users', usersRouter);
 
 
 
-
-app.listen(port, () => {
+const port = process.env.PORT || 5001;
+app.listen(port, () => {    
     console.log(`Server is running on port ${port}`)
 });
