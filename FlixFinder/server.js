@@ -1,7 +1,9 @@
 const express = require('express');
 const request = require('request');
+const dotenv = require('dotenv').config();
 const IBMwatson = require('ibm-watson/natural-language-understanding/v1');
 const { IamAuthenticator } = require('ibm-watson/auth');
+
 
 const app = express();
 app.use(express.json());
@@ -41,7 +43,22 @@ app.get('/api/:movies', async (req, res) => {
     });
 });
 
-const port = 5000;
+
+// DATABASE
+const mongoose = require('mongoose');
+const mongoURI = 'mongodb://localhost:27017/flixDB';
+// Connect to MongoDB
+mongoose.connect(mongoURI, { useNewUrlParser: true })
+  .then(() => console.log('MongoDB connected'))
+  .catch(err => console.log(err));
+
+// user database
+const usersRouter = require('./routes/users.js');
+app.use('/users', usersRouter);
+
+
+
+const port = process.env.PORT || 5001;
 app.listen(port, () => {    
     console.log(`Server is running on port ${port}`)
 });
