@@ -10,10 +10,10 @@ router.route('/').get((req, res) => {
 
 router.route('/add').post((req, res) => {
     console.log("ADD USER");
-    const accesstoken = req.body.accesstoken || null;
-    const refreshtoken = req.body.refreshtoken || null;
-    const newUser = new User({ accesstoken, refreshtoken });
-
+    if (Object.keys(req.body).length === 0) {
+        return res.status(400).json({ message: 'Empty request body' });
+      }
+    const newUser = new User(req.body);
     newUser.save()
         .then(() => res.json('User added!'))
         .catch(err => res.status(400).json('Error: ' + err))
@@ -21,43 +21,32 @@ router.route('/add').post((req, res) => {
 
 router.route('/:id/update').patch((req, res) => {
     console.log("UPDATE USER");
-    User.findById(req.params.id)
-        .then(user => {
-            if (!user){
-                console.log("USER NOT FOUND");
-                return res.status(404).json('Error: User not found');
-            }
-            const filter = { _id: req.params.id};
-            const update = {
-                accesstoken: req.body.accesstoken || user.accesstoken,
-                refreshtoken: req.body.refreshtoken || user.refreshtoken,
-                emotions: req.body.emotions || user.emotions,
-                genres: req.body.genres || user.genres,
-                movies: req.body.movies || user.movies
-            };
+    const filter = { _id: req.params.id };
+    const update = { $set: req.body };
+    User.updateOne(filter, update)
+      .then(result => {
+        if (result.modifiedCount === 0) {
+          return res.status(404).json({ message: 'User not found' });
+        }
+        return res.json({ message: 'User updated' });
+      })
+      .catch(err => res.status(400).json('Error: ' + err));
+  });
+  
 
-            User.updateOne(filter, update)
-                .then(result => res.json({ message: 'User updated'}))
-                .catch(err => res.status(400).json('Error: ' + err));
-        })
-        .catch(err => res.status(400).json('Error: ' + err));
-});
-
-router.route('/:id/delete').delete((req, res) => {
+  router.route('/:id/delete').delete((req, res) => {
     console.log("DELETE USER");
-    User.findById(req.params.id)
-        .then(user => {
-            if (!user) {
-                console.log("USER NOT FOUND");
-                return res.status(404).json('Error: User not found');
-            }
-            const filter = { _id: req.params.id };
-            User.deleteOne(filter)
-                .then(() => res.json('User deleted.'))
-                .catch(err => res.status(400).json('Error: ' + err));
-        })
-        .catch(err => res.status(400).json('Error: ' + err));
-});
+    const filter = { _id: req.params.id };
+    User.deleteOne(filter)
+      .then(result => {
+        if (result.deletedCount === 0) {
+          return res.status(404).json({ message: 'User not found' });
+        }
+        return res.json({ message: 'User deleted' });
+      })
+      .catch(err => res.status(400).json('Error: ' + err));
+  });
+  
 
 router.route('/deleteAll').delete((req, res) => {
     console.log("DELETE ALL USERS");
@@ -65,5 +54,34 @@ router.route('/deleteAll').delete((req, res) => {
         .then(() => res.json('All users deleted.'))
         .catch(err => res.status(400).json('Error: ' + err));
 });
+
+router.route('/:id/addgenre').patch((req, res) => {
+    console.log("ADD GENRE TO USER");
+    const filter = { _id: req.params.id };
+    const update = { $push: { genres: req.body.genre } };
+    User.updateOne(filter, update)
+      .then(result => {
+        if (result.modifiedCount === 0) {
+          return res.status(404).json({ message: 'User not found' });
+        }
+        return res.json({ message: 'Genre added to user' });
+      })
+      .catch(err => res.status(400).json('Error: ' + err));
+  });
+
+  router.route('/:id/deletegenre').patch((req, res) => {
+    console.log("DELETE GENRE FROM USER");
+    const filter = { _id: req.params.id };
+    const update = { $pull: { genres: req.body.genre } };
+    User.updateOne(filter, update)
+      .then(result => {
+        if (result.modifiedCount === 0) {
+          return res.status(404).json({ message: 'User not found' });
+        }
+        return res.json({ message: 'Genre deleted from user' });
+      })
+      .catch(err => res.status(400).json('Error: ' + err));
+  });
+
 
 module.exports = router
