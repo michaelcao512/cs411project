@@ -18,7 +18,7 @@ const userSchema = new Schema({
         genre: String,
         emotion: String,
     }]
-})
+});
 
 const User = mongoose.model('User', userSchema);
 module.exports = User;
