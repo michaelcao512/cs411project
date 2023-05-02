@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import Search from './containers/Prototype/Search.tsx';
+import Search from './containers/Prototype/Search';
 
 function App() {
   return (
