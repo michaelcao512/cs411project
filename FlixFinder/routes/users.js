@@ -25,16 +25,22 @@ router.route('/:id/update').patch((req, res) => {
         .then(user => {
             if (!user){
                 console.log("USER NOT FOUND");
-                return res.status(404).json('Error: User not found')
+                return res.status(404).json('Error: User not found');
             }
-            user.accesstoken = req.body.accesstoken || user.accesstoken;
-            user.refreshtoken = req.body.refreshtoken || user.refreshtoken;
+            const filter = { _id: req.params.id};
+            const update = {
+                accesstoken: req.body.accesstoken || user.accesstoken,
+                refreshtoken: req.body.refreshtoken || user.refreshtoken,
+                emotions: req.body.emotions || user.emotions,
+                genres: req.body.genres || user.genres,
+                movies: req.body.movies || user.movies
+            };
 
-            user.save()
-                .then(() => res.json('User updated!'))
-                .catch(err => res.status(400).json('Error: ' + err))
+            User.updateOne(filter, update)
+                .then(result => res.json({ message: 'User updated'}))
+                .catch(err => res.status(400).json('Error: ' + err));
         })
-        .catch(err => res.status(400).json('Error: ' + err))
+        .catch(err => res.status(400).json('Error: ' + err));
 });
 
 router.route('/:id/delete').delete((req, res) => {
@@ -45,7 +51,8 @@ router.route('/:id/delete').delete((req, res) => {
                 console.log("USER NOT FOUND");
                 return res.status(404).json('Error: User not found');
             }
-            User.findByIdAndDelete(req.params.id)
+            const filter = { _id: req.params.id };
+            User.deleteOne(filter)
                 .then(() => res.json('User deleted.'))
                 .catch(err => res.status(400).json('Error: ' + err));
         })
