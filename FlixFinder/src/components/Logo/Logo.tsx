@@ -1,5 +1,4 @@
 import React, { FC } from "react";
-import "./Logo.css";
 import logo from "./assets/logo.png";
 import logoSmall from "./assets/logo-small.png";
 
