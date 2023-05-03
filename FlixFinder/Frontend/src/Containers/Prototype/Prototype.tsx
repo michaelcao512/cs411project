@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import './Search.css';
+import './Prototype.css';
 
 type Movie = {
     imdbID: string;
@@ -9,7 +9,7 @@ type Movie = {
     Poster: string;
 };
 
-const Search: React.FC = () => {
+const Prototype: React.FC = () => {
     const [searchTerm, setSearchTerm] = useState("");
     const [searchResults, setSearchResults] = useState<Movie[]>([]);
 
@@ -51,4 +51,4 @@ const Search: React.FC = () => {
 };
 
 
-export default Search;
+export default Prototype;

@@ -1,8 +1,8 @@
-import React, { FC } from "react";
+import React, { FC, MouseEventHandler } from "react";
 import twitterButton from "./assets/twitterButton.svg";
 
 interface TwitterAuthProps {
-    onClick: Function;
+    onClick: MouseEventHandler<HTMLImageElement>;
 }
 
 const TwitterAuth: FC<TwitterAuthProps> = (props) => {

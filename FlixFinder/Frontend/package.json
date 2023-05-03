@@ -7,18 +7,10 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^0.26.1",
-    "dotenv": "^16.0.3",
-    "express": "^4.18.2",
-    "express-session": "^1.17.3",
-    "mongoose": "^7.1.0",
-    "passport": "^0.6.0",
-    "passport-twitter": "^1.0.4",
-    "ibm-watson": "^7.1.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.11.0",
     "react-scripts": "5.0.1",
-    "request": "^2.88.2",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -50,8 +42,8 @@
     "@types/node": "^18.15.11",
     "@types/react": "^18.0.33",
     "@types/react-dom": "^18.0.11",
-    "@types/request": "^2.48.8",
-    "typescript": "^5.0.3"
+    "@types/react-router-dom": "^5.3.3",
+    "typescript": "^5.0.4"
   },
   "proxy": "http://localhost:5001"
 }

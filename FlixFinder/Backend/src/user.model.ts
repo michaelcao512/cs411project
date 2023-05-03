@@ -1,8 +1,6 @@
+import mongoose from "mongoose";
 
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
-
-const userSchema = new Schema({
+const userSchema = new mongoose.Schema({
     accesstoken: {
       type: String,
       default: "<missing>"
@@ -38,6 +36,5 @@ const userSchema = new Schema({
       default: []
     }
   });
-  
-const User = mongoose.model('User', userSchema);
-module.exports = User; 
+
+export default mongoose.model('User', userSchema);

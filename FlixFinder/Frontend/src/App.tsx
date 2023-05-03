@@ -1,19 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import './App.css';
 
-
-import LoginPage from './containers/LoginPage/LoginPage.tsx';
-import ResultsPage from './containers/ResultsPage/ResultsPage.tsx';
-import ErrorPage from './containers/ErrorPage/ErrorPage.tsx';
-
-/*function App() {
-  return (
-    <div>
-      <ErrorPage></ErrorPage>
-    </div>
-  );
-}*/
+import LoginPage from './Containers/LoginPage/LoginPage';
+import ResultsPage from './Containers/ResultsPage/ResultsPage';
+import ErrorPage from './Containers/ErrorPage/ErrorPage';
 
 function App() {
   return (
