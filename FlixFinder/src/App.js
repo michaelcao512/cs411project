@@ -1,8 +1,8 @@
 import React from 'react';
-import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-// import Search from './containers/Prototype/Search.tsx';
-// import Logo from './components/Logo/Logo.tsx';
+import './App.css';
+
+
 import LoginPage from './containers/LoginPage/LoginPage.tsx';
 import ResultsPage from './containers/ResultsPage/ResultsPage.tsx';
 import ErrorPage from './containers/ErrorPage/ErrorPage.tsx';

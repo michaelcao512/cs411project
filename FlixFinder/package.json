@@ -7,7 +7,12 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^0.26.1",
+    "dotenv": "^16.0.3",
     "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "mongoose": "^7.1.0",
+    "passport": "^0.6.0",
+    "passport-twitter": "^1.0.4",
     "ibm-watson": "^7.1.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -48,5 +53,5 @@
     "@types/request": "^2.48.8",
     "typescript": "^5.0.3"
   },
-  "proxy": "http://localhost:5000"
+  "proxy": "http://localhost:5001"
 }
