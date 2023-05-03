@@ -1,5 +1,4 @@
 import React, { FC } from "react";
-import "./Logo.css";
 import twitterButton from "./assets/twitterButton.svg";
 
 interface TwitterAuthProps {
