@@ -40,7 +40,7 @@ const userSchema = new mongoose.Schema({
       }
     },
     genres: {
-      type: [String],
+      type: [Number],
       default: []
     }
 });
