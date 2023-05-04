@@ -14,13 +14,13 @@
 .subtitle{
     position: absolute;
     align-self: center;
-    top: 40%;
+    top: 35%;
 
     font-family: var(--font-josefin);
     font-style: normal;
     font-weight: 400;
-    font-size: 200px;
-    line-height: 240px;
+    font-size: 100px;
+    line-height: 120px;
     /* identical to box height */
 
     color: #D90429;
