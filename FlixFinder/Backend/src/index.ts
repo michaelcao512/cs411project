@@ -4,6 +4,7 @@
 import express from "express";
 import session from "express-session";
 import mongoose from "mongoose";
+import { ConnectOptions } from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
 import passport from "passport";
@@ -15,12 +16,13 @@ const app = express();
 
 // Middleware
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 app.use(
     session({
         secret: "secretcode",
         resave: true,
-        saveUnitialized: true;
+        saveUninitialized: true
     })
 );
 app.use(passport.initialize());
@@ -59,12 +61,12 @@ const mongoURI = 'mongodb://localhost:27017/flixDB';
 mongoose.connect(mongoURI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
-})
+} as ConnectOptions)
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.log(err));
 
 // user database
-const usersRouter = require('./routes/users.js');
+import usersRouter from './user.router';
 app.use('/users', usersRouter);
 
 const port = process.env.PORT || 5001;
