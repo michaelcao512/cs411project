@@ -1,5 +1,11 @@
-.page{
+@import url('https://fonts.googleapis.com/css2?family=Abel&display=swap');
 
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.page{
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -14,27 +20,25 @@
 .subtitle{
     position: absolute;
     align-self: center;
-    top: 40%;
+    top: 30%;
 
-    font-family: var(--font-josefin);
+    font-family: "Abel", sans-serif;
     font-style: normal;
     font-weight: 400;
-    font-size: 200px;
+    font-size: 50px;
     line-height: 240px;
     /* identical to box height */
 
     color: #D90429;
 }
 
+.subtitle span {
+    color: #EDF2F4;
+}
+
 .background{
-    /*position: absolute;
-    width: 2013px;
-    height: 2759px;
-    left: -93px;
-    top: -388px; */
-    position: relative;
-    height: 100%;
-    min-height: 100vh;
+    position: fixed;
+    width: 100%;
     mix-blend-mode: darken;
 }
 
