@@ -20,14 +20,16 @@
 .subtitle{
     position: absolute;
     align-self: center;
-    top: 30%;
+    top: 35%;
 
     font-family: "Abel", sans-serif;
     font-style: normal;
     font-weight: 400;
+
     font-size: 50px;
-    line-height: 240px;
-    /* identical to box height */
+    line-height: 120px;
+
+/* identical to box height */
 
     color: #D90429;
 }

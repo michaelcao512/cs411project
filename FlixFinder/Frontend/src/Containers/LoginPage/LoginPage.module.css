@@ -9,12 +9,13 @@
     display: flex;
     flex-direction: column;
     height: 100%;
-    min-height: 100vh;
+    width: 100%;
+    /*min-height: 100vh;*/
     align-items: center; 
     position: relative;
 
-    background: rgba(0, 0, 0, 0.8); 
-    mix-blend-mode: normal; 
+    background: rgba(0, 0, 0, 0.8);
+    mix-blend-mode: normal;
 }
 
 .subtitle{
@@ -24,8 +25,10 @@
     font-family: "Abel", sans-serif;
     font-style: normal;
     font-weight: 400;
-    font-size: 40px;
-    line-height: 64px;
+    font-size: 25px;
+    line-height: 32px;
+    /* identical to box height */
+
 
     color: #FFFFFF;
 }
