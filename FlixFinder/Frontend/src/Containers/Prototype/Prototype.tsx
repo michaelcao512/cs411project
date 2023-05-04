@@ -26,20 +26,20 @@ const Prototype: React.FC = () => {
     };
 
     return (
-        <div className="w-screen">
-            <form onSubmit={handleSearch} className="flex justify-center">
+        <div>
+            <form onSubmit={handleSearch}>
                 <input
                     type="text"
                     placeholder="Search for a movie"
                     value={searchTerm}
                     onChange={(event) => setSearchTerm(event.target.value)}
                 />
-                <button className="btn btn-blue" type="submit">Search</button>
+                <button type="submit">Search</button>
             </form>
             {searchResults.length > 0 && (
-                <div className="flex flex-col items-center">
+                <div>
                     {searchResults.map((movie) => (
-                        <div key={movie.imdbID} className="m-3 flex flex-col items-center">
+                        <div key={movie.imdbID}>
                             <img src={movie.Poster} alt={movie.Title} />
                             <p>{movie.Title} ({movie.Year})</p>
                         </div>

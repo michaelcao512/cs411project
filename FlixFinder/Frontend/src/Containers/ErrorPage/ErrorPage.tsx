@@ -6,12 +6,12 @@ import Background from "./assets/Background.svg";
 const ErrorPage = () => {
     return (
         <div className={styles.page}>
-            < img src ={Background} className={styles.background} />
+            <img src ={Background} className={styles.background} />
             <div className={styles.logo}>
                 < Logo small/>
             </div>
             <div className={styles.subtitle}>
-                <h1>ERROR</h1>
+                <h1>PAGE NOT FOUND <span>:(</span></h1>
             </div>
         </div>
     );
