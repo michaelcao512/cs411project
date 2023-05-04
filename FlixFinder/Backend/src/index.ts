@@ -54,7 +54,7 @@ app.use(passport.session());
 //     .catch(err => {
 //         console.log('error:', err);
 //     });
- 
+
 // DATABASE
 const mongoURI = 'mongodb://localhost:27017/flixDB';
 // Connect to MongoDB
@@ -62,15 +62,15 @@ mongoose.connect(mongoURI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 } as ConnectOptions)
-  .then(() => console.log('MongoDB connected'))
-  .catch(err => console.log(err));
+    .then(conn => console.log(`MongoDB connected: ${conn.connection.host}`))
+    .catch(err => console.log(err));
 
 // user database
 import usersRouter from './user.router';
 app.use('/users', usersRouter);
 
-const port = process.env.PORT || 5001;
-app.listen(port, () => {    
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
     console.log(`Server is running on port ${port}`)
 });
 

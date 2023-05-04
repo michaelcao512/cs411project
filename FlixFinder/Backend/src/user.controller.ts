@@ -4,26 +4,26 @@ import { Request, Response } from "express";
 const getUsers = (req: Request, res: Response) => {
   console.log("GET USERS");
   User.find()
-      .then(users => res.json(users))
-      .catch( (err: Error) => res.status(400).json('Error: ' + err));
+    .then(users => res.json(users))
+    .catch((err: Error) => res.status(400).json('Error: ' + err));
 };
 
 const addUser = (req: Request, res: Response) => {
   console.log("ADD USER");
   if (Object.keys(req.body).length === 0) {
-      return res.status(400).send({ message: 'Empty request body' });
-    }
+    return res.status(400).send({ message: 'Empty request body' });
+  }
   const newUser = new User(req.body);
   newUser.save()
-      .then(() => res.json('User added!'))
-      .catch(err => res.status(400).json('Error: ' + err))
+    .then(() => res.json('User added!'))
+    .catch(err => res.status(400).json('Error: ' + err))
 };
 
 const updateUser = (req: Request, res: Response) => {
   console.log("UPDATE USER");
   const filter = { _id: req.params.id };
-  const update = { $set: req.body };
-  User.updateOne(filter, update)
+  const query = { $set: req.body };
+  User.updateOne(filter, query)
     .then(result => {
       if (result.modifiedCount === 0) {
         return res.status(404).json({ message: 'User not found' });
@@ -49,15 +49,15 @@ const deleteUser = (req: Request, res: Response) => {
 const deleteAllUsers = (req: Request, res: Response) => {
   console.log("DELETE ALL USERS");
   User.deleteMany({})
-      .then(() => res.json('All users deleted.'))
-      .catch(err => res.status(400).json('Error: ' + err));
+    .then(() => res.json('All users deleted.'))
+    .catch(err => res.status(400).json('Error: ' + err));
 };
 
 const addGenreToUser = (req: Request, res: Response) => {
   console.log("ADD GENRE TO USER");
   const filter = { _id: req.params.id };
-  const update = { $push: { genres: req.body.genre } };
-  User.updateOne(filter, update)
+  const query = { $push: { genres: req.body.genre } };
+  User.updateOne(filter, query)
     .then(result => {
       if (result.modifiedCount === 0) {
         return res.status(404).json({ message: 'User not found' });
@@ -70,8 +70,8 @@ const addGenreToUser = (req: Request, res: Response) => {
 const deleteGenreFromUser = (req: Request, res: Response) => {
   console.log("DELETE GENRE FROM USER");
   const filter = { _id: req.params.id };
-  const update = { $pull: { genres: req.body.genre } };
-  User.updateOne(filter, update)
+  const query = { $pull: { genres: req.body.genre } };
+  User.updateOne(filter, query)
     .then(result => {
       if (result.modifiedCount === 0) {
         return res.status(404).json({ message: 'User not found' });
