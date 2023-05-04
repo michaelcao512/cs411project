@@ -5,9 +5,9 @@ import cors from "cors";
 import dotenv from "dotenv";
 import passport from "passport";
 import request from "request";
-import User from "./User";
+import User from "./user.model";
+import usersRouter from './user.router';
 import { IUser } from "./types";
-
 
 dotenv.config();
 
@@ -18,6 +18,7 @@ const app = express();
 ////////////////
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 app.use(
     session({
@@ -126,18 +127,20 @@ mongoose.connect(mongoURI, {
   .then(() => console.log('MongoDB connected'))
     .catch(err => console.log(err));
 
+app.use('/users', usersRouter);
+
 ///////////////
 // Prototype //
 ///////////////
 
-app.get('/api/:movies', async (req, res) => {
-    const searchTerm = req.params.movies;
-    const url = `http://www.omdbapi.com/?s=%s&apikey=${process.env.OMDB_APIKEY}`;
-    const searchRequest = url.replace("%s", searchTerm);
-    request(searchRequest, function (error, response, body) {
-        res.send(body);
-    });
-});
+// app.get('/api/:movies', async (req, res) => {
+//     const searchTerm = req.params.movies;
+//     const url = `http://www.omdbapi.com/?s=%s&apikey=${process.env.OMDB_APIKEY}`;
+//     const searchRequest = url.replace("%s", searchTerm);
+//     request(searchRequest, function (error, response, body) {
+//         res.send(body);
+//     });
+// });
 
 //////////
 // Port //
