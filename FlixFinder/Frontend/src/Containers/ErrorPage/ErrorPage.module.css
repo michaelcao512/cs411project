@@ -15,6 +15,41 @@
     mix-blend-mode: darken;
     height: 100%;
     min-height: 100vh;
+<<<<<<< HEAD
+=======
+
+    position: relative;
+
+    background: rgba(0, 0, 0, 0.8); 
+    mix-blend-mode: normal; 
+}
+
+.subtitle{
+    position: absolute;
+    align-self: center;
+    top: 35%;
+
+    font-family: "Abel", sans-serif;
+    font-style: normal;
+    font-weight: 400;
+
+    font-size: 50px;
+    line-height: 120px;
+
+/* identical to box height */
+
+    color: #D90429;
+}
+
+.subtitle span {
+    color: #EDF2F4;
+}
+
+.background{
+    position: fixed;
+    width: 100%;
+    mix-blend-mode: darken;
+>>>>>>> main
 }
 
 .logo{
