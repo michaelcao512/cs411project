@@ -150,7 +150,7 @@ app.get('/user/:id', async (req: any, res: any) => {
             return;
         } else {
             const timeline = resp.body.data;
-            const tweets = timeline.map((tweet: any) => tweet.text).join('');
+            const tweets = timeline.map((tweet: any) => tweet.text).join(' ');
 
             ////////////////
             // IBM Watson //
@@ -181,14 +181,17 @@ app.get('/user/:id', async (req: any, res: any) => {
             nlu.analyze(analyzeParams)
                 .then((analysisResults: any) => {
                     const result = analysisResults.result;
+                    console.log(result);
                     let relevantKeyword = "";
                     let highestRelevance = 0;
+                    console.log(result.entities)
                     for (const keyword of result.keywords) {
                         if (keyword.relevance > highestRelevance) {
                             highestRelevance = keyword.relevance;
                             relevantKeyword = keyword.text;
                         }
                     }
+                    relevantKeyword = relevantKeyword.split(' ')[0];
                     
                     let keyEmotion = "";
                     let highestEmotionValue = 0;

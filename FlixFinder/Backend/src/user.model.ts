@@ -7,6 +7,7 @@ const userSchema = new mongoose.Schema({
     },
     username: {
         required: true,
+        type: String
     }
 });
 
