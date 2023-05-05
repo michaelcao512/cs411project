@@ -1,13 +1,13 @@
 import express from "express";
 import session from "express-session";
-import mongoose, {ConnectOptions} from "mongoose";
+import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
 import passport from "passport";
-import request from "request";
+// import request from "request";
 import User from "./user.model";
-import usersRouter from './user.router';
 import { IUser } from "./types";
+import userRouter from './user.router';
 
 dotenv.config();
 
@@ -28,9 +28,21 @@ app.use(
     })
 );
 
-////////////////////////////
-// Twitter Authentication //
-////////////////////////////
+app.use('/users', userRouter);
+
+//////////////
+// Database //
+//////////////
+
+const mongoURI = "mongodb+srv://ken:cs411project@cluster0.q7wod0n.mongodb.net/?retryWrites=true&w=majority";
+mongoose.connect(mongoURI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+}).then(() => console.log('MongoDB connected')).catch(err => console.log(err));
+
+////////////////////
+// Authentication //
+////////////////////
 
 const TwitterStrategy = require('passport-twitter').Strategy;
 app.use(passport.initialize());
@@ -74,62 +86,28 @@ passport.use(new TwitterStrategy({
 app.get('/auth/twitter', passport.authenticate('twitter'));
 
 app.get('/auth/twitter/callback', 
-    passport.authenticate('twitter', { failureRedirect: '/error' }),
+    passport.authenticate('twitter', { failureRedirect: '/error', session: true }),
     function(req, res) {
         // Successful authentication, redirect home.
-        res.redirect('http://localhost:3000');
+        res.redirect(`http://localhost:3000/results`);
     });
 
 app.get("/getuser", (req, res) => {
     res.send(req.user);
 })
 
-////////////////
-// IBM Watson //
-////////////////
-
-const IBMwatson = require('ibm-watson/natural-language-understanding/v1');
-const { IamAuthenticator } = require('ibm-watson/auth');
-const nlu = new IBMwatson({
-    version: '2022-04-07',
-    authenticator: new IamAuthenticator({
-      apikey: `${process.env.WATSON_APIKEY}`,
-    }),
-    serviceUrl: `${process.env.WATSON_SERVICE_URL}`,
-});
-
-const analyzeParams = {
-    'url': "www.ibm.com",
-    'features': {
-        'concepts': {
-            'limit': 3
-        }
+app.get("/auth/logout", (req, res) => {
+    if (req.user) {
+        req.logout(function (err) {
+            if (err) {
+                return err;
+            } else {
+                res.send("done");
+            }
+        })
     }
-};
-
-nlu.analyze(analyzeParams)
-    .then((analysisResults: any) => {
-        console.log(JSON.stringify(analysisResults, null, 2));
-    })
-    .catch((err: any) => {
-        console.log('error:', err);
-    });
+});
  
-//////////////
-// Database //
-//////////////
-
-const mongoURI = `mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@${process.env.MONGODB_CLUSTER}`;
-
-mongoose.connect(mongoURI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-} as ConnectOptions)
-  .then(() => console.log('MongoDB connected'))
-    .catch(err => console.log(err));
-
-app.use('/users', usersRouter);
-
 ///////////////
 // Prototype //
 ///////////////

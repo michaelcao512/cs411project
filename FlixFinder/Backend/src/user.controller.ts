@@ -1,10 +1,10 @@
+import express, { Request, Response } from "express";
 import User from "./user.model";
-import { Request, Response } from "express";
 
 const getUsers = (req: Request, res: Response) => {
   console.log("GET USERS");
   User.find()
-    .then(users => res.json(users))
+    .then((users: any) => res.json(users))
     .catch((err: Error) => res.status(400).json('Error: ' + err));
 };
 
@@ -16,7 +16,7 @@ const addUser = (req: Request, res: Response) => {
   const newUser = new User(req.body);
   newUser.save()
     .then(() => res.json('User added!'))
-    .catch(err => res.status(400).json('Error: ' + err))
+    .catch((err: Error) => res.status(400).json('Error: ' + err))
 };
 
 const updateUser = (req: Request, res: Response) => {
@@ -24,33 +24,33 @@ const updateUser = (req: Request, res: Response) => {
   const filter = { _id: req.params.id };
   const query = { $set: req.body };
   User.updateOne(filter, query)
-    .then(result => {
+    .then((result: any) => {
       if (result.modifiedCount === 0) {
         return res.status(404).json({ message: 'User not found' });
       }
       return res.json({ message: 'User updated' });
     })
-    .catch(err => res.status(400).json('Error: ' + err));
+    .catch((err: Error) => res.status(400).json('Error: ' + err));
 };
 
 const deleteUser = (req: Request, res: Response) => {
   console.log("DELETE USER");
   const filter = { _id: req.params.id };
   User.deleteOne(filter)
-    .then(result => {
+    .then((result: any) => {
       if (result.deletedCount === 0) {
         return res.status(404).json({ message: 'User not found' });
       }
       return res.json({ message: 'User deleted' });
     })
-    .catch(err => res.status(400).json('Error: ' + err));
+    .catch((err: Error) => res.status(400).json('Error: ' + err));
 };
 
 const deleteAllUsers = (req: Request, res: Response) => {
   console.log("DELETE ALL USERS");
   User.deleteMany({})
     .then(() => res.json('All users deleted.'))
-    .catch(err => res.status(400).json('Error: ' + err));
+    .catch((err: Error) => res.status(400).json('Error: ' + err));
 };
 
 const addGenreToUser = (req: Request, res: Response) => {
@@ -58,13 +58,13 @@ const addGenreToUser = (req: Request, res: Response) => {
   const filter = { _id: req.params.id };
   const query = { $push: { genres: req.body.genre } };
   User.updateOne(filter, query)
-    .then(result => {
+    .then((result: any) => {
       if (result.modifiedCount === 0) {
         return res.status(404).json({ message: 'User not found' });
       }
       return res.json({ message: 'Genre added to user' });
     })
-    .catch(err => res.status(400).json('Error: ' + err));
+    .catch((err: Error) => res.status(400).json('Error: ' + err));
 };
 
 const deleteGenreFromUser = (req: Request, res: Response) => {
@@ -72,13 +72,13 @@ const deleteGenreFromUser = (req: Request, res: Response) => {
   const filter = { _id: req.params.id };
   const query = { $pull: { genres: req.body.genre } };
   User.updateOne(filter, query)
-    .then(result => {
+    .then((result: any) => {
       if (result.modifiedCount === 0) {
         return res.status(404).json({ message: 'User not found' });
       }
       return res.json({ message: 'Genre deleted from user' });
     })
-    .catch(err => res.status(400).json('Error: ' + err));
+    .catch((err: Error) => res.status(400).json('Error: ' + err));
 };
 
 export { getUsers, addUser, updateUser, deleteUser, deleteAllUsers, addGenreToUser, deleteGenreFromUser };

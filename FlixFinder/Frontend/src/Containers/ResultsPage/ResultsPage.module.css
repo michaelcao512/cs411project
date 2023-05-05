@@ -15,7 +15,7 @@
 .subtitle{
     position: absolute;
     align-self: center;
-    top: 15%;
+    top: 10%;
 
     font-family: "Abel", sans-serif;
     font-style: normal;
@@ -37,5 +37,4 @@
     top: 7%;
     left: 4%;
 }
-
 

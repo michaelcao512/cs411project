@@ -1,21 +1,20 @@
 import { Router } from 'express';
 import {
-  addUser,
-  addGenreToUser,
-  deleteAllUsers,
-  deleteGenreFromUser,
-  deleteUser,
-  getUsers,
-  updateUser,
-} from './user.controller';
+    addUser,
+    addGenreToUser,
+    deleteAllUsers,
+    deleteGenreFromUser,
+    deleteUser,
+    getUsers,
+    updateUser,
+  } from './user.controller';
 import {
-  fetchTwitterFeedMiddleware,
-  analyzeEmotionsMiddleware,
-  convertEmotionsToGenresMiddleware,
-  fetchMovieRecommendationsMiddleware,
-  sendMovieRecommendationsMiddleware
+    fetchTwitterFeedMiddleware,
+    analyzeEmotionsMiddleware,
+    convertEmotionsToGenresMiddleware,
+    fetchMovieRecommendationsMiddleware,
+    sendMovieRecommendationsMiddleware
 } from './processUserFeed';
-
 
 const router = Router();
 
@@ -28,11 +27,11 @@ router.route('/:id/addgenre').patch(addGenreToUser);
 router.route('/:id/deletegenre').patch(deleteGenreFromUser);
 
 router.post('/:id/processUserFeed',
-  fetchTwitterFeedMiddleware,
-  analyzeEmotionsMiddleware,
-  convertEmotionsToGenresMiddleware,
-  fetchMovieRecommendationsMiddleware,
-  sendMovieRecommendationsMiddleware
+    fetchTwitterFeedMiddleware,
+    analyzeEmotionsMiddleware,
+    convertEmotionsToGenresMiddleware,
+    fetchMovieRecommendationsMiddleware,
+    sendMovieRecommendationsMiddleware
 );
 
 export default router;
