@@ -159,33 +159,67 @@ app.get('/user/:id', async (req: any, res: any) => {
             const nlu = new IBMwatson({
                 version: '2022-04-07',
                 authenticator: new IamAuthenticator({
-                  apikey: `${process.env.WATSON_APIKEY}`,
+                    apikey: `${process.env.WATSON_APIKEY}`,
                 }),
                 serviceUrl: `${process.env.WATSON_SERVICE_URL}`,
             });
             
-            // const analyzeParams = {
-            //     'text': tweets,
-            //     'features': {
-            //         'concepts': {
-            //             'limit': 3
-            //         }
-            //     }
-            // };
+            const analyzeParams = {
+                'text': tweets,
+                'features': {
+                    'keywords': {
+                        'sentiment': false,
+                        'emotion': false,
+                        'limit': 5
+                    },
+                    'emotion': {
+                        'document': true
+                    }
+                }
+            };
 
-            // nlu.analyze(analyzeParams)
-            // .then((analysisResults: any) => {
-            //     console.log(JSON.stringify(analysisResults, null, 2));
-            // })
-            // .catch((err: any) => {
-            //     console.log('error:', err);
-            // });
-            res.send(tweets);
-        }
+            nlu.analyze(analyzeParams)
+                .then((analysisResults: any) => {
+                    const result = analysisResults.result;
+                    let relevantKeyword = "";
+                    let highestRelevance = 0;
+                    for (const keyword of result.keywords) {
+                        if (keyword.relevance > highestRelevance) {
+                            highestRelevance = keyword.relevance;
+                            relevantKeyword = keyword.text;
+                        }
+                    }
+                    
+                    let keyEmotion = "";
+                    let highestEmotionValue = 0;
+                    const emotionsList = result.emotion.document.emotion
+                    for (const emotion in emotionsList) {
+                        if (emotionsList[emotion] > highestEmotionValue) {
+                            keyEmotion = emotion;
+                            highestEmotionValue = emotionsList[emotion];
+                        }
+                    }
+
+                    const emotionToGenre: { [key: string]: string } = {
+                        joy: "comedy",
+                        sadness: "drama",
+                        fear: "horror",
+                        disgust: "crime",
+                        anger: "action"
+                      };
+
+                    console.log(relevantKeyword, keyEmotion, emotionToGenre[keyEmotion]);
+        
+                    res.send([relevantKeyword, keyEmotion]);
+                })
+                .catch((err: any) => {
+                    console.log('error:', err);
+                });
+            }
     } catch (err) {
         throw new Error(`Request failed: ${err}`);
     }
-})
+});
 
 
 
