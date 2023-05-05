@@ -24,6 +24,8 @@ import needle from "needle";
 import IBMwatson from "ibm-watson/natural-language-understanding/v1"
 import { IamAuthenticator } from "ibm-watson/auth";
 
+import request from "request";
+
 dotenv.config();
 
 const app = express();
@@ -206,11 +208,21 @@ app.get('/user/:id', async (req: any, res: any) => {
                         fear: "horror",
                         disgust: "crime",
                         anger: "action"
-                      };
+                    };
 
-                    console.log(relevantKeyword, keyEmotion, emotionToGenre[keyEmotion]);
-        
-                    res.send([relevantKeyword, keyEmotion]);
+                    const genreToID: { [key: string]: string } = {
+                        comedy: "35",
+                        drama: "18",
+                        horror: "27",
+                        crime: "80",
+                        action: "28"
+                    };
+                    const url = `https://api.themoviedb.org/3/search/movie?api_key=${process.env.TMDB_APIKEY}&language=en-US&with_genres=${genreToID[emotionToGenre[keyEmotion]]}&query=${relevantKeyword}&page=1&include_adult=false`
+                    request(url, function (error, response, body) {
+                        console.log(body);
+                        res.send([relevantKeyword, keyEmotion, emotionToGenre[keyEmotion], body]);
+                    })
+                    
                 })
                 .catch((err: any) => {
                     console.log('error:', err);
