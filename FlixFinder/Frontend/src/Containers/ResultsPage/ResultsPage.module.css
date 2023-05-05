@@ -3,8 +3,8 @@
     display: flex;
     flex-direction: column;
     height: 100%;
-    width: 100%;
-    /*min-height: 100vh;*/
+    /*width: 100%;*/
+    min-height: 100vh;
 
     position: relative;
 
@@ -35,7 +35,7 @@
     top: -388px; */
     position: relative;
     height: 100%;
-    width: 100%;
+    /*width: 100%;*/
     /*min-height: 100vh;*/
     mix-blend-mode: darken;
 }

@@ -3,8 +3,8 @@
     display: flex;
     flex-direction: column;
     height: 100%;
-    width: 100%;
-    /*min-height: 100vh;*/
+    /*width: 100%;*/
+    min-height: 100vh;
     align-items: center; 
     position: relative;
 
@@ -31,14 +31,9 @@
 }
 
 .background{
-    /*position: absolute;
-    width: 2013px;
-    height: 2759px;
-    left: -93px;
-    top: -388px; */
     position: relative;
-    height: 100%;
-    /*min-height: 100vh;*/
+    /*height: 100%;
+    min-height: 100vh;*/
     width: 100%;
     mix-blend-mode: darken;
 }
