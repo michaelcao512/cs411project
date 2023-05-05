@@ -1,10 +1,18 @@
-.page{
+@import url('https://fonts.googleapis.com/css2?family=Abel&display=swap');
 
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.page{
     display: flex;
     flex-direction: column;
     height: 100%;
-    /*width: 100%;*/
     min-height: 100vh;
+    /*height: 100%;
+    width: 100%; */
+    /*min-height: 100vh;*/
     align-items: center; 
     position: relative;
 
@@ -14,33 +22,28 @@
 
 .subtitle{
     position: absolute;
-    /*width: 517px;
-    height: 64px;
-    left: 716px;
-    top: 476px;*/
     top: 50%;
 
-    font-family: var(--font-josefin);
+    font-family: "Abel", sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 25px;
     line-height: 32px;
     /* identical to box height */
 
+
     color: #FFFFFF;
 }
 
 .background{
-    position: relative;
-    /*height: 100%;
-    min-height: 100vh;*/
+    position: fixed;
     width: 100%;
     mix-blend-mode: darken;
 }
 
 .logo{
     position: absolute;
-    top: 30%;
+    top: 25%;
 }
 
 .twitter{
