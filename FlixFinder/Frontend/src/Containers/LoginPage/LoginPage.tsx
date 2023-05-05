@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
 import styles from "./LoginPage.module.css";
 import Logo from "../../Components/Logo/Logo";
-import Background from "./assets/Background.svg";
 import TwitterAuth from "../../Components/TwitterAuth/TwitterAuth";
 
 const LoginPage = () => {
@@ -10,6 +9,18 @@ const LoginPage = () => {
     }
     return (
         <div className={styles.page}>
+<<<<<<< HEAD
+            <div className={styles.container}>
+                <div className={styles.logo}>
+                    < Logo small={false} />
+                </div>
+                <div className={styles.subtitle}>
+                    <h1>find what's worth watching</h1>
+                </div>
+                <div className={styles.twitter}>
+                    <TwitterAuth onClick={twitterLogin} />
+                </div>
+=======
             < img src ={Background} className={styles.background} />
             <div className={styles.logo}>
                 < Logo small = {false}/>
@@ -19,6 +30,7 @@ const LoginPage = () => {
             </div>
             <div className={styles.twitter}>
                 <TwitterAuth onClick={twitterLogin} />
+>>>>>>> main
             </div>
         </div>
     );

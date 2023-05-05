@@ -1,16 +1,15 @@
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
-    username: {
-        required: true,
-        type: String
-    }, 
     twitterId: {
         required: true,
         type: String
     },
-    accessToken: {
+    username: {
         required: true,
+<<<<<<< HEAD
+        type: String
+=======
         type: String,
     },
     refreshToken: {
@@ -42,6 +41,7 @@ const userSchema = new mongoose.Schema({
     genres: {
       type: [Number],
       default: []
+>>>>>>> main
     }
 });
 
