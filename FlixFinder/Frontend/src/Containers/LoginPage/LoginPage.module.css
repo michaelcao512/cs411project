@@ -8,41 +8,39 @@
 .page{
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    background: linear-gradient(rgba(0, 0, 0, 0.80), rgba(0, 0, 0, 0.80)), url(./assets/moviePosterBG.png) no-repeat; 
+    mix-blend-mode: darken;
     height: 100%;
     min-height: 100vh;
-    align-items: center; 
-    position: relative;
-
-    background: rgba(0, 0, 0, 0.8); 
-    mix-blend-mode: normal; 
 }
 
-.subtitle{
-    position: absolute;
-    top: 45%;
-
-    font-family: "Abel", sans-serif;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 40px;
-    line-height: 64px;
-
-    color: #FFFFFF;
-}
-
-.background{
-    position: fixed;
-    width: 100%;
-    mix-blend-mode: darken;
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 2rem;
 }
 
 .logo{
-    position: absolute;
-    top: 25%;
+    scale: 90%;
+}
+
+.subtitle{
+    font-family: "Abel", sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 36px;
+    line-height: 32px;
+    color: #EDF2F4;
+
+    margin-top: 3rem;
+    margin-bottom: 5rem;
 }
 
 .twitter{
-    position: absolute;
-    top: 60%;
+    scale: 80%;
 }
 

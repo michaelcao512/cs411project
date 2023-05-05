@@ -83,9 +83,7 @@ passport.use(new TwitterStrategy({
             if (!user) {
                 const newUser = new User({
                     twitterId: profile.id,
-                    username: profile.username,
-                    accessToken: accessToken,
-                    refreshToken: refreshToken
+                    username: profile.username
                 });
                 await newUser.save();
                 cb(null, newUser);
@@ -217,10 +215,15 @@ app.get('/user/:id', async (req: any, res: any) => {
                         crime: "80",
                         action: "28"
                     };
+
+                    //////////////
+                    // TMDB API //
+                    //////////////
+
                     const url = `https://api.themoviedb.org/3/search/movie?api_key=${process.env.TMDB_APIKEY}&language=en-US&with_genres=${genreToID[emotionToGenre[keyEmotion]]}&query=${relevantKeyword}&page=1&include_adult=false`
                     request(url, function (error, response, body) {
-                        console.log(body);
-                        res.send([relevantKeyword, keyEmotion, emotionToGenre[keyEmotion], body]);
+                        console.log([relevantKeyword, keyEmotion, body]);
+                        res.send([relevantKeyword, keyEmotion, body]);
                     })
                     
                 })

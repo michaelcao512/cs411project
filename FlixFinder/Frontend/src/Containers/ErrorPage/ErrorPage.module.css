@@ -8,19 +8,25 @@
 .page{
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    background: linear-gradient(rgba(0, 0, 0, 0.80), rgba(0, 0, 0, 0.80)), url(./assets/moviePosterBG.png) no-repeat; 
+    mix-blend-mode: darken;
     height: 100%;
     min-height: 100vh;
+}
 
-    position: relative;
-
-    background: rgba(0, 0, 0, 0.8); 
-    mix-blend-mode: normal; 
+.logo{
+    position: absolute;
+    top: 7%;
+    left: 4%;
 }
 
 .subtitle{
     position: absolute;
     align-self: center;
-    top: 30%;
+    top: 35%;
 
     font-family: "Abel", sans-serif;
     font-style: normal;
@@ -29,23 +35,12 @@
     line-height: 240px;
     /* identical to box height */
 
-    color: #D90429;
+    color: #EF233C;
 }
 
 .subtitle span {
     color: #EDF2F4;
 }
 
-.background{
-    position: fixed;
-    width: 100%;
-    mix-blend-mode: darken;
-}
-
-.logo{
-    position: absolute;
-    top: 7%;
-    left: 4%;
-}
 
 

@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import styles from "./LoginPage.module.css";
 import Logo from "../../Components/Logo/Logo";
-import Background from "./assets/Background.svg";
 import TwitterAuth from "../../Components/TwitterAuth/TwitterAuth";
 
 const LoginPage = () => {
@@ -9,8 +8,8 @@ const LoginPage = () => {
         window.location.href = "http://localhost:4000/auth/twitter";
     }
     return (
-            <div className={styles.page}>
-                < img src={Background} className={styles.background} />
+        <div className={styles.page}>
+            <div className={styles.container}>
                 <div className={styles.logo}>
                     < Logo small={false} />
                 </div>
@@ -21,6 +20,7 @@ const LoginPage = () => {
                     <TwitterAuth onClick={twitterLogin} />
                 </div>
             </div>
+        </div>
     );
 }; 
 
