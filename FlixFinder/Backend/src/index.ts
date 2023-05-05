@@ -1,13 +1,28 @@
+/////////////
+// Imports //
+/////////////
+
+// General
 import express from "express";
-import session from "express-session";
-import mongoose from "mongoose";
-import cors from "cors";
 import dotenv from "dotenv";
-import passport from "passport";
-// import request from "request";
+
+// Database
+import mongoose from "mongoose";
 import User from "./user.model";
 import { IUser } from "./types";
-import userRouter from './user.router';
+
+// Authentication
+import cors from "cors";
+import passport from "passport";
+import session from "express-session";
+
+// Twitter
+import { Client, auth } from "twitter-api-sdk";
+import needle from "needle";
+
+// IBM Watson
+import IBMwatson from "ibm-watson/natural-language-understanding/v1"
+import { IamAuthenticator } from "ibm-watson/auth";
 
 dotenv.config();
 
@@ -28,13 +43,11 @@ app.use(
     })
 );
 
-app.use('/users', userRouter);
-
 //////////////
 // Database //
 //////////////
 
-const mongoURI = "mongodb+srv://ken:cs411project@cluster0.q7wod0n.mongodb.net/?retryWrites=true&w=majority";
+const mongoURI = `mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@${process.env.MONGODB_CLUSTER}`;
 mongoose.connect(mongoURI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -89,7 +102,7 @@ app.get('/auth/twitter/callback',
     passport.authenticate('twitter', { failureRedirect: '/error', session: true }),
     function(req, res) {
         // Successful authentication, redirect home.
-        res.redirect(`http://localhost:3000/results`);
+        res.redirect(`http://localhost:3000/user`);
     });
 
 app.get("/getuser", (req, res) => {
@@ -107,7 +120,78 @@ app.get("/auth/logout", (req, res) => {
         })
     }
 });
- 
+
+/////////////////
+// Twitter API //
+// //////////////
+
+const authClient = new auth.OAuth2User({
+    client_id: `${ process.env.TWITTER_CONSUMERKEY }`,
+    client_secret: `${ process.env.TWITTER_CONSUMERSECRET }`,
+    callback: "http://127.0.0.1:3000/callback",
+    scopes: ["tweet.read", "users.read", "offline.access"],
+});
+  
+const client = new Client(authClient);
+
+app.get('/user/:id', async (req: any, res: any) => {
+    const url = `https://api.twitter.com/2/users/${req.params.id}/tweets`;
+    const params = { "max_results": 10 }
+    const options = {
+        headers: {
+            "User-Agent": "v2UserTweetsJS",
+            "authorization": `Bearer ${process.env.TWITTER_BEARERTOKEN}`
+        }
+    }
+    try {
+        const resp = await needle('get', url, params, options);
+        if (resp.statusCode != 200) {
+            console.log(`${resp.statusCode} ${resp.statusMessage}:\n${resp.body}`);
+            return;
+        } else {
+            const timeline = resp.body.data;
+            const tweets = timeline.map((tweet: any) => tweet.text).join('');
+
+            ////////////////
+            // IBM Watson //
+            ////////////////
+
+            const nlu = new IBMwatson({
+                version: '2022-04-07',
+                authenticator: new IamAuthenticator({
+                  apikey: `${process.env.WATSON_APIKEY}`,
+                }),
+                serviceUrl: `${process.env.WATSON_SERVICE_URL}`,
+            });
+            
+            // const analyzeParams = {
+            //     'text': tweets,
+            //     'features': {
+            //         'concepts': {
+            //             'limit': 3
+            //         }
+            //     }
+            // };
+
+            // nlu.analyze(analyzeParams)
+            // .then((analysisResults: any) => {
+            //     console.log(JSON.stringify(analysisResults, null, 2));
+            // })
+            // .catch((err: any) => {
+            //     console.log('error:', err);
+            // });
+            res.send(tweets);
+        }
+    } catch (err) {
+        throw new Error(`Request failed: ${err}`);
+    }
+})
+
+
+
+
+
+
 ///////////////
 // Prototype //
 ///////////////

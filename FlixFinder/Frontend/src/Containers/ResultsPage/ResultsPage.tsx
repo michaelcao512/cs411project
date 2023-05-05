@@ -1,12 +1,27 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import styles from "./ResultsPage.module.css";
+import { Link } from "react-router-dom";
+
 import Logo from "../../Components/Logo/Logo";
 import Background from "./assets/Background.svg";
+
 import axios, { AxiosResponse } from 'axios';
 import { myContext } from '../../Context';
 import { IUser } from "../../types/maintypes";
 
 const ResultsPage = () => {
+    const context = useContext(myContext) as IUser;
+
+    const [userTweets, setUserTweets] = useState("");
+    useEffect(() => {
+        axios.get(`http://localhost:4000/user/${context.twitterId}`,
+            { withCredentials: true }).then((res: AxiosResponse) => {
+                setUserTweets(res.data);
+            })
+        }, [])
+        
+    console.log(userTweets);
+    
     const logout = () => {
         axios.get("http://localhost:4000/auth/logout", {withCredentials: true}).then((res: AxiosResponse) => {
             if (res.data === "done") {
@@ -14,8 +29,6 @@ const ResultsPage = () => {
             }
         })
     }
-    const context = useContext(myContext) as IUser;
-    console.log(context);
     return (
         <div className={styles.page}>
             <div>

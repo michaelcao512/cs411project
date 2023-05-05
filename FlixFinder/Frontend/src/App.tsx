@@ -11,7 +11,7 @@ function App() {
     return (
         <Router>
             <Routes>
-                {context ? (<Route path="/results" element={<ResultsPage />}></Route>) :(<Route path="/" element={<LoginPage />}></Route>)}
+                {context ? (<Route path="/user" element={<ResultsPage />}></Route>) :(<Route path="/" element={<LoginPage />}></Route>)}
                 <Route path="*" element={<ErrorPage />}></Route>
             </Routes>
         </Router>

@@ -1,6 +1,5 @@
 import express, { Request, Response } from "express";
 import dotenv from "dotenv";
-import request from "request";
 import User from "./user.model";
 import Twitter from "twitter";
 
