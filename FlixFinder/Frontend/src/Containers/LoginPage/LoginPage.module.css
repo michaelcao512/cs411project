@@ -14,7 +14,6 @@
     background: linear-gradient(rgba(0, 0, 0, 0.80), rgba(0, 0, 0, 0.80)), url(./assets/moviePosterBG.png) no-repeat; 
     mix-blend-mode: darken;
     height: 100%;
-<<<<<<< HEAD
     min-height: 100vh;
 }
 
@@ -23,36 +22,6 @@
     flex-direction: column;
     align-items: center;
     margin: 2rem;
-=======
-    width: 100%;
-    /*min-height: 100vh;*/
-    align-items: center; 
-    position: relative;
-
-    background: rgba(0, 0, 0, 0.8);
-    mix-blend-mode: normal;
-}
-
-.subtitle{
-    position: absolute;
-    top: 45%;
-
-    font-family: "Abel", sans-serif;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 25px;
-    line-height: 32px;
-    /* identical to box height */
-
-
-    color: #FFFFFF;
-}
-
-.background{
-    position: fixed;
-    width: 100%;
-    mix-blend-mode: darken;
->>>>>>> main
 }
 
 .logo{
