@@ -9,9 +9,10 @@ import ErrorPage from './Containers/ErrorPage/ErrorPage';
 
 function App() {
     const userObject = useContext(myContext);
+    var user = useContext(myContext)
     var isAuth = true
-    if(userObject == null)
-      isAuth = false
+    if(user)
+      isAuth = false;
     console.log(userObject);
     return (
         <Router>
